@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: "${db.url}"
+    username: postgres
+    password: password
+
+db:
+  host: localhost
+  name: employee
+  url: "jdbc:postgresql://${db.host}:5432/${db.name}"
