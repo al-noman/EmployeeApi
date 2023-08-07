@@ -1,10 +1,27 @@
 spring:
+  application:
+    name: employee-api
   datasource:
-    url: "${db.url}"
+    url: 'jdbc:postgresql://${DB_HOST:localhost}:5432/employee'
     username: postgres
     password: password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-test-query: 'SELECT 1'
+      maximum-pool-size: 10
+      properties:
+        hibernate:
+          jdbc:
+            time_zone: 'UTC'
 
-db:
-  host: localhost
-  name: employee
-  url: "jdbc:postgresql://${db.host}:5432/${db.name}"
+server:
+  port: 8080
+
+kafka:
+  bootstrapAddress: '${KAFKA_HOST:localhost}:29092'
+  topics:
+    employee: employee
+
+logging:
+  level:
+    root: info
