@@ -24,12 +24,11 @@ class EmployeeService(val employeeRepository: EmployeeRepository, val producer: 
     }
 
     fun updateById(id: UUID, employee: EmployeeEntity): EmployeeEntity {
-        return employeeRepository.findByIdOrNull(id)?.let {
-            updateProperties(it, employee)
-            val updatedEmployee = employeeRepository.save(it)
-            producer.sendMessage(UPDATE, updatedEmployee)
-            updatedEmployee
-        } ?: throw EntityNotFoundException("$id")
+        val persistedEmployee = getOneById(id)
+        updateProperties(persistedEmployee, employee)
+        val updatedEmployee = employeeRepository.save(persistedEmployee)
+        producer.sendMessage(UPDATE, updatedEmployee)
+        return updatedEmployee
     }
 
     private fun updateProperties(persistedEntity: EmployeeEntity, updatedEntity: EmployeeEntity) {
@@ -40,9 +39,8 @@ class EmployeeService(val employeeRepository: EmployeeRepository, val producer: 
     }
 
     fun deleteById(id: UUID) {
-        employeeRepository.findByIdOrNull(id)?.let {
-            producer.sendMessage(DELETE, it)
-            employeeRepository.delete(it)
-        } ?: throw EntityNotFoundException("$id")
+        val persistedEmployee = getOneById(id)
+        producer.sendMessage(DELETE, persistedEmployee)
+        employeeRepository.delete(persistedEmployee)
     }
 }
