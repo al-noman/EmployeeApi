@@ -14,3 +14,9 @@ This Employee API Service allows to manage employees. It exposes REST endpoints 
 - Execute `docker-compose up` command from the root path.
 - This will start the whole application in 4 different containers named: `app`, `kafka`, `zookeeper`, `postgres`.
 
+### Documentations:
+The available APIs, calling mechanism, and the expected responses are all documented in [here](https://documenter.getpostman.com/view/2367507/2s9Xy2NBky).
+
+N.B: Due to lack of time, authentication feature is not implemented. 
+Documenting the APIs with Swagger is also not done for same reason. Instead, the above postman documentation is provided for reference. 
+
