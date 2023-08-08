@@ -32,7 +32,6 @@ class Producer(
         val employeeEvent = EmployeeEvent(eventType, converter.toDto(employeeEntity))
         return MessageBuilder.withPayload(employeeEvent)
             .setHeader(KafkaHeaders.TOPIC, topic)
-            .setHeader("X-Custom-Header", "Custom header here")
             .build()
     }
 }
